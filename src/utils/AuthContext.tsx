@@ -7,12 +7,14 @@ import React, {
 } from "react";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { IS_COOKIE_PRESENT } from "../graphql/queries";
-import { LOGIN_USER, LOGOUT_USER } from "../graphql/mutations";
+import { LOGIN_USER, LOGOUT_USER, REGISTER_USER } from "../graphql/mutations";
 import { useNavigate } from "react-router-dom";
 import {
   LoginUserMutationVariables,
   IsUserLoggedInQuery,
   LoginUserMutation,
+  RegisterUserMutation,
+  RegisterUserMutationVariables,
 } from "../graphql/types";
 interface AuthContextProps {
   authenticated: boolean;
@@ -20,8 +22,12 @@ interface AuthContextProps {
     loginUserInput: LoginUserMutationVariables["loginUserInput"]
   ) => Promise<void>;
   logout: () => void;
+  register: (
+    registerUserInput: RegisterUserMutationVariables["registerUserInput"]
+  ) => Promise<void>;
   error?: ApolloError;
   loading: boolean;
+  registerError?: ApolloError;
 }
 
 interface AuthProviderProps {
@@ -41,6 +47,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     LoginUserMutation,
     LoginUserMutationVariables
   >(LOGIN_USER);
+
+  const [registerUser, { error: registerError }] = useMutation<
+    RegisterUserMutation,
+    RegisterUserMutationVariables
+  >(REGISTER_USER);
 
   const [logoutUserMutation] = useMutation(LOGOUT_USER);
 
@@ -72,10 +83,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     }
   };
 
+  const register = async (
+    registerUserInput: RegisterUserMutationVariables["registerUserInput"]
+  ) => {
+    try {
+      const result = await registerUser({
+        variables: { registerUserInput },
+      });
+
+      if (result.data?.registerUser.id) {
+        setAuthenticated(true);
+
+        navigate("/");
+        navigate("/", { replace: true });
+      }
+
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const logout = async () => {
     try {
       await logoutUserMutation();
-
       setAuthenticated(false);
       navigate("/login");
     } catch (error) {
@@ -85,7 +116,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 
   return (
     <AuthContext.Provider
-      value={{ authenticated, login, logout, error, loading }}
+      value={{
+        authenticated,
+        login,
+        logout,
+        error,
+        loading,
+        register,
+        registerError,
+      }}
     >
       {children}
     </AuthContext.Provider>

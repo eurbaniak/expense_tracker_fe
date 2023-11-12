@@ -1,73 +1,82 @@
 import {
   TextInput,
   PasswordInput,
-  Checkbox,
   Anchor,
   Paper,
   Title,
   Text,
   Container,
-  Group,
   Button,
 } from "@mantine/core";
 import classes from "./login.module.css";
-import { useState } from "react";
 import { useAuth } from "../../utils/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "@mantine/form";
 
-interface loginDataT {
+interface LoginData {
   email: string;
   password: string;
 }
 
 export function Login() {
+  const navigate = useNavigate();
   const { login, error, loading } = useAuth();
-  const [formData, setFormData] = useState<loginDataT>({
-    email: "",
-    password: "",
+
+  const form = useForm<LoginData>({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+    },
   });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await login(formData);
-  };
 
   return (
     <Container size={420} my={40}>
-      <Title ta="center" className={classes.title}>
-        Expense Tracker
+      <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
+        <h1 className={classes.title}>
+          {" "}
+          <Text
+            component="span"
+            variant="gradient"
+            gradient={{ from: "teal", to: "cyan" }}
+            inherit
+          >
+            Expense Tracker
+          </Text>{" "}
+        </h1>
+        Welcome Back!
       </Title>
       <Text c="dimmed" size="sm" ta="center" mt={5}>
         Do not have an account yet?{" "}
-        <Anchor size="sm" component="button">
+        <Anchor
+          size="sm"
+          component="button"
+          onClick={() => navigate("/register")}
+        >
           Create account
         </Anchor>
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <form onSubmit={handleFormSubmit}>
+        <form
+          onSubmit={form.onSubmit(
+            async (values: LoginData) => await login(values)
+          )}
+        >
           <TextInput
             label="Email"
-            placeholder="you@mantine.dev"
+            placeholder="your@email.com"
             required
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
+            {...form.getInputProps("email")}
           />
           <PasswordInput
             label="Password"
             placeholder="Your password"
             required
             mt="md"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
+            {...form.getInputProps("password")}
           />
           <Button type="submit" fullWidth mt="xl" loading={loading}>
             Sign in

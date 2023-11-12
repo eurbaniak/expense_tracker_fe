@@ -16,6 +16,7 @@ const client = new ApolloClient({
 
 const theme = createTheme({
   fontFamily: "Barlow, sans-serif",
+  primaryColor: "teal",
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -23,7 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ApolloProvider client={client}>
       <BrowserRouter>
         <AuthProvider>
-          <MantineProvider theme={theme}>
+          <MantineProvider theme={theme} defaultColorScheme="dark">
             <App />
           </MantineProvider>
         </AuthProvider>

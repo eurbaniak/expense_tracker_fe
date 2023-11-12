@@ -17,16 +17,10 @@ export const LOGOUT_USER = gql`
   }
 `;
 
-export interface LoginUserMutation {
-  loginUser: {
-    message: string;
-    userId: string;
-  };
-}
-
-export interface LoginUserMutationVariables {
-  loginUserInput: {
-    email: string;
-    password: string;
-  };
-}
+export const REGISTER_USER = gql`
+  mutation RegisterUser($registerUserInput: RegisterUserInput) {
+    registerUser(registerUserInput: $registerUserInput) {
+      id
+    }
+  }
+`;

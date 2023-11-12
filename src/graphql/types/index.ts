@@ -1,3 +1,5 @@
+export type ID = string | number;
+
 export interface LoginUserMutation {
   loginUser: {
     message: string;
@@ -15,5 +17,18 @@ export interface LoginUserMutationVariables {
 export interface IsUserLoggedInQuery {
   isUserLoggedIn: {
     email: string | null;
+  };
+}
+
+export interface RegisterUserMutation {
+  registerUser: {
+    id: ID;
+  };
+}
+export interface RegisterUserMutationVariables {
+  registerUserInput: {
+    email: string;
+    password: string;
+    username: string;
   };
 }
