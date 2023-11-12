@@ -41,6 +41,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 }: any) => {
   const navigate = useNavigate();
 
+  const mainLocation = "/app";
+
   const { data: cookieData } = useQuery<IsUserLoggedInQuery>(IS_COOKIE_PRESENT);
 
   const [loginUserMutation, { error, loading }] = useMutation<
@@ -75,8 +77,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
       if (result.data?.loginUser) {
         setAuthenticated(true);
 
-        navigate("/");
-        navigate("/", { replace: true });
+        navigate(mainLocation);
+        navigate(mainLocation, { replace: true });
       }
     } catch (error) {
       console.error(error);
@@ -94,8 +96,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
       if (result.data?.registerUser.id) {
         setAuthenticated(true);
 
-        navigate("/");
-        navigate("/", { replace: true });
+        navigate(mainLocation);
+        navigate(mainLocation, { replace: true });
       }
 
       console.log(result);

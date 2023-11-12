@@ -46,7 +46,7 @@ export function Register() {
               gradient={{ from: "teal", to: "cyan" }}
               inherit
             >
-              Expense Tracker
+              Expense Guardian
             </Text>{" "}
           </h1>
           Register Account

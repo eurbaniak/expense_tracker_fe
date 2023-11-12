@@ -1,0 +1,31 @@
+.header {
+  height: 66px;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #373a40;
+}
+
+.inner {
+  height: 66px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  display: block;
+  line-height: 1;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #adb5bd;
+  font-size: 18px;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #373a40;
+  }
+}
+
+.linkLabel {
+  margin-right: rem(5px);
+}

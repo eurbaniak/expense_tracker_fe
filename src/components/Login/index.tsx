@@ -7,6 +7,7 @@ import {
   Text,
   Container,
   Button,
+  Center,
 } from "@mantine/core";
 import classes from "./login.module.css";
 import { useAuth } from "../../utils/AuthContext";
@@ -43,7 +44,7 @@ export function Login() {
             gradient={{ from: "teal", to: "cyan" }}
             inherit
           >
-            Expense Tracker
+            Expense Guardian
           </Text>{" "}
         </h1>
         Welcome Back!
@@ -88,6 +89,11 @@ export function Login() {
           )}
         </form>
       </Paper>
+      <Center mt={20}>
+        <Button variant="outline" onClick={() => navigate("/")}>
+          Go to Homepage
+        </Button>
+      </Center>
     </Container>
   );
 }
