@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 }: any) => {
   const navigate = useNavigate();
 
-  const mainLocation = "/app";
+  const mainLocation = "/dashboard";
 
   const { data: cookieData } = useQuery<IsUserLoggedInQuery>(IS_COOKIE_PRESENT);
 

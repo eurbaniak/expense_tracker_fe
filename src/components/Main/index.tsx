@@ -12,7 +12,7 @@ import {
 import { IconCheck, IconBrandGithubFilled } from "@tabler/icons-react";
 import image from "../../assets/savings.svg";
 import classes from "./main.module.css";
-import { Header } from "../Header";
+import { Header } from "../Layout/components/Header";
 import { useNavigate } from "react-router-dom";
 
 export default function Main() {
