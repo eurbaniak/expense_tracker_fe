@@ -4,7 +4,6 @@ import {
   Code,
   Text,
   Button,
-  Modal,
   Divider,
   ActionIcon,
   Tooltip,
@@ -18,10 +17,10 @@ import {
   IconHome,
 } from "@tabler/icons-react";
 import classes from "./navbar.module.scss";
-import { useAuth } from "../../../../utils/AuthContext/AuthContext";
 import { useDisclosure } from "@mantine/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetCurrentUser } from "../../../../api/queries";
+import LogoutModal from "../LogoutModal";
 
 const router = [
   { link: "/dashboard", label: "Dashboard", icon: IconBellRinging },
@@ -34,7 +33,6 @@ export function Navbar() {
   const [active, setActive] = useState(location.pathname);
   const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
-  const { logout } = useAuth();
   const { data } = useGetCurrentUser();
   const currentUser = data?.currentUser;
 
@@ -93,24 +91,7 @@ export function Navbar() {
         {links}
       </div>
 
-      <Modal
-        opened={opened}
-        onClose={close}
-        title="Logout"
-        centered
-        overlayProps={{
-          backgroundOpacity: 0.55,
-          blur: 3,
-        }}
-      >
-        Are you sure you want to logout?
-        <Group justify="end" mt={20}>
-          <Button variant="default" onClick={close}>
-            Cancel
-          </Button>
-          <Button onClick={async () => await logout()}>Logout</Button>
-        </Group>
-      </Modal>
+      <LogoutModal opened={opened} close={close} />
 
       <Divider mb={25} />
       <Group justify="center" gap="xs">

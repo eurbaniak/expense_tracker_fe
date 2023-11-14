@@ -1,12 +1,22 @@
-import { Group, Burger, Container, Text, Button, Divider } from "@mantine/core";
+import {
+  Group,
+  Container,
+  Text,
+  Button,
+  Divider,
+  Tooltip,
+  ActionIcon,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./header.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../utils/AuthContext/AuthContext";
 import { useGetCurrentUser } from "../../../../api/queries";
+import { IconLogout } from "@tabler/icons-react";
+import LogoutModal from "../LogoutModal";
 
 export function Header() {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
   const { authenticated } = useAuth();
   const { data } = useGetCurrentUser();
@@ -58,11 +68,23 @@ export function Header() {
                 >
                   Go to Dashboard
                 </Button>
+                <Tooltip label="Logout">
+                  <ActionIcon
+                    ml={5}
+                    variant="light"
+                    color="red"
+                    radius={10}
+                    onClick={open}
+                    size={42}
+                  >
+                    <IconLogout stroke={1.2} size={25} />
+                  </ActionIcon>
+                </Tooltip>
               </>
             )}
           </Group>
-          <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
         </div>
+        <LogoutModal opened={opened} close={close} />
       </Container>
     </header>
   );
