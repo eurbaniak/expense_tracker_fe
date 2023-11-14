@@ -14,9 +14,11 @@ import image from "../../assets/savings.svg";
 import classes from "./main.module.css";
 import { Header } from "../Layout/components/Header";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../utils/AuthContext/AuthContext";
 
 export default function Main() {
   const navigate = useNavigate();
+  const { authenticated } = useAuth();
 
   return (
     <>
@@ -78,6 +80,7 @@ export default function Main() {
                 variant="gradient"
                 gradient={{ from: "teal", to: "cyan" }}
                 onClick={() => navigate("/login")}
+                disabled={authenticated}
               >
                 Get started
               </Button>

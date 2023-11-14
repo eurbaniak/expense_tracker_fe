@@ -5,6 +5,7 @@ import { Register } from "./components/Register";
 import Main from "./components/Main";
 import Dashboard from "./components/Dashboard";
 import { Layout } from "./components/Layout";
+import AnonymousRoute from "./utils/AnonymousRoute";
 
 const App = () => {
   return (
@@ -23,8 +24,22 @@ const App = () => {
           </ProtectedRoute>
         }
       />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route
+        path="/login"
+        element={
+          <AnonymousRoute>
+            <Login />
+          </AnonymousRoute>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <AnonymousRoute>
+            <Register />
+          </AnonymousRoute>
+        }
+      />
     </Routes>
   );
 };
