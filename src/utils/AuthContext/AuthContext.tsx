@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { ApolloError } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
-import { RegisterInput, LoginInput, ID } from "../../api/interfaces";
+import { RegisterInput, LoginInput } from "../../api/interfaces";
 import {
   useLoginMutation,
   useLogoutMutation,
@@ -23,7 +23,6 @@ interface AuthContextProps {
   register: (params: RegisterInput) => Promise<void>;
   error?: ApolloError | null;
   loading: boolean;
-  userId?: ID;
 }
 
 interface AuthProviderProps {
@@ -46,7 +45,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
   const [logoutMutation] = useLogoutMutation();
 
   const { data } = useIsCookiePresent();
-  const [userId, setUserId] = useState<ID>();
+
   const [authenticated, setAuthenticated] = useState<boolean>(
     data?.isUserLoggedIn !== null
   );
@@ -63,11 +62,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
           variables: { loginUserInput: params },
         });
 
-        console.log(response);
-
         if (response.data?.loginUser.userId) {
           setAuthenticated(true);
-          setUserId(response.data.loginUser.userId);
           navigate(mainLocation);
           navigate(mainLocation, { replace: true });
         }
@@ -88,7 +84,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 
         if (response.data?.registerUser.userId) {
           setAuthenticated(true);
-          setUserId(response.data.registerUser.userId);
           navigate(mainLocation);
           navigate(mainLocation, { replace: true });
         }
@@ -118,7 +113,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         error,
         loading,
         register,
-        userId,
       }}
     >
       {children}

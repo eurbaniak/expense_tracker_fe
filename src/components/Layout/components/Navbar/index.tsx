@@ -1,17 +1,27 @@
 import { useState } from "react";
-import { Group, Code, Text, Button, Modal } from "@mantine/core";
+import {
+  Group,
+  Code,
+  Text,
+  Button,
+  Modal,
+  Divider,
+  Avatar,
+} from "@mantine/core";
 import {
   IconBellRinging,
   IconFingerprint,
   IconReceipt2,
   IconLogout,
+  IconAt,
 } from "@tabler/icons-react";
 import classes from "./navbar.module.scss";
 import { useAuth } from "../../../../utils/AuthContext/AuthContext";
 import { useDisclosure } from "@mantine/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useGetCurrentUser } from "../../../../api/queries";
 
-const data = [
+const router = [
   { link: "/dashboard", label: "Dashboard", icon: IconBellRinging },
   { link: "/dashboard/expenses", label: "My Expenses", icon: IconReceipt2 },
   { link: "/dashboard/account", label: "Account", icon: IconFingerprint },
@@ -23,8 +33,13 @@ export function Navbar() {
   const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const { data } = useGetCurrentUser();
+  const currentUser = data?.currentUser;
 
-  const links = data.map((item) => (
+  const email = currentUser?.email;
+  const username = currentUser?.username;
+
+  const links = router.map((item: any) => (
     <span
       className={classes.link}
       data-active={item.link === active || undefined}
@@ -39,6 +54,10 @@ export function Navbar() {
       <span>{item.label}</span>
     </span>
   ));
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <nav className={classes.navbar}>
@@ -57,6 +76,18 @@ export function Navbar() {
           </h3>
           <Code fw={700}>v0.0.1</Code>
         </Group>
+        <Group wrap="nowrap" mb={25} justify="center">
+          <div>
+            <Text fz="lg" fw={500} ta="center">
+              {username}
+            </Text>
+            <Group wrap="nowrap" gap={10} mt={3}>
+              <IconAt stroke={1} size={15} />
+              <Text c="dimmed">{email}</Text>
+            </Group>
+          </div>
+        </Group>
+        <Divider mb={25} />
         {links}
       </div>
 

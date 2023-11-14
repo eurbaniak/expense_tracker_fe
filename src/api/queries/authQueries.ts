@@ -5,7 +5,6 @@ export const IS_COOKIE_PRESENT = gql`
   query Query {
     isUserLoggedIn {
       email
-      userId
     }
   }
 `;
@@ -22,7 +21,7 @@ export const GET_USER_BY_ID = gql`
 interface IsUserLoggedInQuery {
   isUserLoggedIn: {
     email: string | null;
-    userId: ID;
+    userId: ID | null;
   };
 }
 
