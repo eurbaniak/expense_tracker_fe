@@ -1,13 +1,5 @@
 import { useState } from "react";
-import {
-  Group,
-  Code,
-  Text,
-  Button,
-  Modal,
-  Divider,
-  Avatar,
-} from "@mantine/core";
+import { Group, Code, Text, Button, Modal, Divider } from "@mantine/core";
 import {
   IconBellRinging,
   IconFingerprint,
