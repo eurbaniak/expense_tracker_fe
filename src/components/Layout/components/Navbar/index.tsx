@@ -1,11 +1,21 @@
 import { useState } from "react";
-import { Group, Code, Text, Button, Modal, Divider } from "@mantine/core";
+import {
+  Group,
+  Code,
+  Text,
+  Button,
+  Modal,
+  Divider,
+  ActionIcon,
+  Tooltip,
+} from "@mantine/core";
 import {
   IconBellRinging,
   IconFingerprint,
   IconReceipt2,
   IconLogout,
   IconAt,
+  IconHome,
 } from "@tabler/icons-react";
 import classes from "./navbar.module.scss";
 import { useAuth } from "../../../../utils/AuthContext/AuthContext";
@@ -102,11 +112,22 @@ export function Navbar() {
         </Group>
       </Modal>
 
-      <div className={classes.footer}>
+      <Divider mb={25} />
+      <Group justify="center" gap="xs">
+        <Tooltip label="Go back to Home" color="teal">
+          <ActionIcon
+            variant="outline"
+            onClick={() => navigate("/")}
+            radius="xs"
+            size="lg"
+          >
+            <IconHome stroke={1.2} size={25} />
+          </ActionIcon>
+        </Tooltip>
         <Button variant="outline" leftSection={<IconLogout />} onClick={open}>
           Logout
         </Button>
-      </div>
+      </Group>
     </nav>
   );
 }
