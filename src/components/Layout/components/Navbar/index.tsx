@@ -7,7 +7,7 @@ import {
   IconLogout,
 } from "@tabler/icons-react";
 import classes from "./navbar.module.scss";
-import { useAuth } from "../../../../utils/AuthContext";
+import { useAuth } from "../../../../utils/AuthContext/AuthContext";
 import { useDisclosure } from "@mantine/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -44,15 +44,17 @@ export function Navbar() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>
         <Group className={classes.header} justify="space-between">
-          <Text
-            component="span"
-            variant="gradient"
-            gradient={{ from: "teal", to: "cyan" }}
-            inherit
-            fw={700}
-          >
-            Expense Guardian
-          </Text>
+          <h3>
+            <Text
+              component="span"
+              variant="gradient"
+              gradient={{ from: "teal", to: "cyan" }}
+              inherit
+              fw={700}
+            >
+              Expense Guardian
+            </Text>
+          </h3>
           <Code fw={700}>v0.0.1</Code>
         </Group>
         {links}

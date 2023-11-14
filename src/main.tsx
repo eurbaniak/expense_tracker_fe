@@ -4,15 +4,10 @@ import App from "./App.tsx";
 import "./index.css";
 import { MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { AuthProvider } from "./utils/AuthContext.tsx";
+import { ApolloProvider } from "@apollo/client";
+import { AuthProvider } from "./utils/AuthContext/AuthContext.tsx";
 import { BrowserRouter } from "react-router-dom";
-
-const client = new ApolloClient({
-  uri: "http://localhost:4000/api",
-  cache: new InMemoryCache(),
-  credentials: "include",
-});
+import { client } from "./api/client.ts";
 
 const theme = createTheme({
   fontFamily: "Barlow, sans-serif",

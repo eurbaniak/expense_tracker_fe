@@ -10,19 +10,14 @@ import {
 import classes from "./register.module.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
-import { useAuth } from "../../utils/AuthContext";
-
-interface RegisterData {
-  email: string;
-  username: string;
-  password: string;
-}
+import { useAuth } from "../../utils/AuthContext/AuthContext";
+import { RegisterInput } from "../../api/interfaces";
 
 export function Register() {
   const navigate = useNavigate();
-  const { register, registerError: error } = useAuth();
+  const { register, error, loading } = useAuth();
 
-  const form = useForm<RegisterData>({
+  const form = useForm<RegisterInput>({
     initialValues: {
       email: "",
       password: "",
@@ -52,9 +47,7 @@ export function Register() {
           Register Account
         </Title>
         <form
-          onSubmit={form.onSubmit(
-            async (values: RegisterData) => await register(values)
-          )}
+          onSubmit={form.onSubmit((values: RegisterInput) => register(values))}
         >
           <TextInput
             label="Email address"
@@ -82,6 +75,7 @@ export function Register() {
             size="md"
             gradient={{ from: "teal", to: "cyan" }}
             type="submit"
+            loading={loading}
           >
             Register
           </Button>

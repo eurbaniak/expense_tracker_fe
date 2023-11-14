@@ -10,7 +10,7 @@ import {
   Center,
 } from "@mantine/core";
 import classes from "./login.module.css";
-import { useAuth } from "../../utils/AuthContext";
+import { useAuth } from "../../utils/AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
 
@@ -35,18 +35,18 @@ export function Login() {
 
   return (
     <Container size={420} my={40}>
+      <h1 className={classes.title}>
+        <Text
+          component="span"
+          variant="gradient"
+          gradient={{ from: "teal", to: "cyan" }}
+          inherit
+          ta="center"
+        >
+          Expense Guardian
+        </Text>
+      </h1>
       <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
-        <h1 className={classes.title}>
-          {" "}
-          <Text
-            component="span"
-            variant="gradient"
-            gradient={{ from: "teal", to: "cyan" }}
-            inherit
-          >
-            Expense Guardian
-          </Text>{" "}
-        </h1>
         Welcome Back!
       </Title>
       <Text c="dimmed" size="sm" ta="center" mt={5}>
