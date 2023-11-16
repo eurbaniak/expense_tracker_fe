@@ -4,10 +4,12 @@ import App from "./App.tsx";
 import "./index.css";
 import { MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
 import { ApolloProvider } from "@apollo/client";
 import { AuthProvider } from "./utils/AuthContext/AuthContext.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { client } from "./api/client.ts";
+import { Notifications } from "@mantine/notifications";
 
 const theme = createTheme({
   fontFamily: "Barlow, sans-serif",
@@ -20,6 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <AuthProvider>
           <MantineProvider theme={theme} defaultColorScheme="dark">
+            <Notifications position="bottom-center" zIndex={1000} />
             <App />
           </MantineProvider>
         </AuthProvider>
